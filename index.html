@@ -1,25 +1,34 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
+  <meta name="description" content="自泰國際有限公司｜專業船舶媒合、租賃買賣與大型港口機具維護保養。位於高雄港，提供一站式海運工程支援。">
   <link rel="icon" href="/ZitaiINTL/favicon.jpg">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>自泰國際有限公司</title>
   <style>
-    /* ====== 全域樣式 ====== */
+    /* ====== 顏色變數與全域樣式優化 ====== */
+    :root {
+      --primary-color: #1A374D; /* 專業海軍藍 (取代 #007799) */
+      --accent-color: #ffd700; /* 亮黃/金色 (強調色) */
+      --footer-bg: #1A374D; /* 頁尾顏色與主色統一 */
+      --text-color: #333;
+      --heading-color: #444;
+    }
+
     body {
       font-family: "Arial", sans-serif;
       margin: 0;
       padding: 0;
       background: #ffffff;
-      color: #333;
+      color: var(--text-color);
       scroll-behavior: smooth;
     }
     h2 {
       text-align: center;
       margin-top: 40px;
       margin-bottom: 20px;
-      color: #444;
+      color: var(--heading-color);
     }
     .section {
       padding: 40px 20px;
@@ -27,26 +36,58 @@
       margin: auto;
     }
 
+    /* 關於我們區塊內文置中優化 */
+    .about-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+      line-height: 1.8;
+    }
+    
     /* ====== 頁首區塊 ====== */
     header {
       background: url("Homepage.jpg") center/cover no-repeat;
       color: white;
       padding: 4rem 1rem;
       text-align: center;
+      position: relative; /* 確保陰影在最上層 */
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.2); /* 增加一層半透明黑色陰影，讓文字更清晰 */
+    }
+    header h1, .hero-slogan {
+      position: relative; /* 確保文字在陰影上層 */
+      z-index: 2;
     }
     header h1 {
       font-size: 3rem;
-      text-shadow: 2px 2px 6px rgba(0,0,0,0.5);
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+      margin-bottom: 0.5rem;
+    }
+    .hero-slogan {
+      font-size: 1.2rem;
+      margin-top: 0;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
     }
 
     /* ====== 導覽列 ====== */
     nav {
-      background: #007799;
+      background: var(--primary-color);
       padding: 0.8rem;
       text-align: center;
       position: sticky;
       top: 0;
       z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
     }
     nav a {
       color: white;
@@ -54,13 +95,14 @@
       text-decoration: none;
       font-weight: bold;
       transition: color 0.3s;
+      white-space: nowrap; /* 防止連結換行 */
     }
     nav a:hover {
-      color: #ffd700;
+      color: var(--accent-color);
     }
     nav button {
-      background: #ffd700;
-      color: #333;
+      background: var(--accent-color);
+      color: var(--text-color);
       border: none;
       padding: 6px 12px;
       border-radius: 6px;
@@ -68,6 +110,7 @@
       cursor: pointer;
       transition: background 0.3s;
       margin-left: 15px;
+      white-space: nowrap;
     }
     nav button:hover {
       background: #ffb400;
@@ -85,17 +128,32 @@
       overflow: hidden;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      width: 600px;
+      width: 100%; /* 手機版佔滿 */
+      max-width: 450px; /* 卡片最大寬度 */
       background: #fff;
     }
+
+    /* 桌機版卡片並排佈局 */
+    @media (min-width: 769px) {
+      .card {
+        width: calc(33.33% - 13.33px); /* 嘗試三張卡片並排 */
+        min-width: 300px;
+      }
+      .menu {
+        justify-content: space-between; /* 均勻分佈卡片 */
+      }
+    }
+
     .card img {
       width: 100%;
+      height: 250px; /* 統一圖片高度，使卡片更一致 */
+      object-fit: cover; /* 確保圖片覆蓋整個區域 */
       display: block;
       border-radius: 12px 12px 0 0;
       transition: transform 0.4s ease;
     }
     .card:hover img {
-      transform: scale(1.1);
+      transform: scale(1.05); /* 縮小 hover 效果，減少視覺干擾 */
     }
 
     /* 桌機版 overlay */
@@ -105,7 +163,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.6);
+      background: rgba(0,0,0,0.7); /* 稍微深一點的陰影 */
       color: white;
       display: flex;
       flex-direction: column;
@@ -116,9 +174,10 @@
       border-radius: 12px;
       text-align: center;
       padding: 1rem;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
       box-sizing: border-box;
+    }
+    .overlay h3 {
+      color: var(--accent-color);
     }
     .card:hover .overlay {
       opacity: 1;
@@ -134,24 +193,31 @@
     }
     .card-text h3 {
       margin-top: 0;
-      color: #333;
+      color: var(--primary-color);
     }
 
     /* ====== 手機版設定 ====== */
     @media (max-width: 768px) {
-      .menu {
-        flex-direction: column;
-        align-items: center;
-      }
       .card {
         width: 90%;
       }
+      /* 移除 !important */
       .overlay {
-        display: none !important; /* 手機不顯示浮動文字 */
+        display: none; 
       }
       .card-text {
         display: block; /* 手機顯示簡短文字 */
       }
+    }
+
+    /* ====== 聯絡資訊優化 ====== */
+    .contact-section p a {
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .contact-section p a:hover {
+      text-decoration: underline;
     }
 
     /* ====== Google Map ====== */
@@ -167,260 +233,158 @@
       border: 0;
     }
     @media (max-width: 768px) {
-      .map-container {
-        max-width: 95%;
-      }
       .map-container iframe {
         height: 300px;
       }
     }
 
-    /* ====== 頁尾區塊 ====== */
+    /* ====== 頁尾區塊優化 ====== */
     footer {
-      background: #6f4e37;
+      background: var(--footer-bg); /* 使用主色調 */
       color: white;
       text-align: center;
       padding: 1.5rem;
       margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    footer p {
+        margin: 0.3rem 0;
     }
   </style>
 </head>
-<body>
+<body data-lang="zh">
 
-  <!-- 頁首區塊 -->
   <header>
-    <h1>自泰國際有限公司</h1>
+    <h1 data-en="Zitai INTL Co., Ltd.">自泰國際有限公司</h1>
+    <p class="hero-slogan" data-en="One-stop Maritime Engineering Support and Vessel Management">一站式海運工程支援與船舶管理</p>
   </header>
 
-  <!-- 導覽列 -->
   <nav>
-    <a href="#about">關於自泰</a>
-    <a href="#menu">服務項目</a>
-    <a href="#contact">聯絡方式</a>
+    <a href="#about" class="translatable" data-en="About Us">關於自泰</a>
+    <a href="#menu" class="translatable" data-en="Services">服務項目</a>
+    <a href="#contact" class="translatable" data-en="Contact">聯絡方式</a>
     <button id="lang-toggle">English</button>
   </nav>
 
-  <!-- 關於我們 -->
   <section id="about" class="section">
-    <h2>關於自泰</h2>
-    <div style="max-width: 800px; margin: 0 auto; text-align: left; line-height: 1.8;">
-      <p>本公司主要據點位於港口碼頭，專注於提供專業的船舶服務與產業支援。我們致力於串聯船東與客戶之間的合作，確保航運作業能夠順暢且高效，並協助建立長期且互信的合作關係。</p>
-      <p>除了媒合服務外，我們亦提供船舶租賃與買賣業務，能依據客戶的需求，提供合適的船舶資源與完整的交易支持。不論是短期租賃或長期購置，我們皆以安全、透明且專業的流程，協助客戶靈活調度與配置資源。</p>
-      <p>同時，我們具備完善的大型機具維修能力，擁有專業技術團隊與維修設備，能針對港口及航運相關的大型機具進行檢測、保養與修繕，確保作業安全與設備效能。</p>
-      <p>憑藉著對產業的深刻理解與豐富經驗，我們持續提升服務品質，為船東、貨主及合作夥伴提供最可靠的支持， 共同推動航運產業的穩健發展。</p>
-    </div>
+    <h2 data-en="About Us">關於自泰</h2>
+    <div class="about-content">
+      </div>
   </section>
 
-  <!-- 服務項目 -->
   <section id="menu" class="section">
-    <h2>服務項目</h2>
+    <h2 data-en="Services">服務項目</h2>
     <div class="menu">
-      <!-- 服務項目 1 -->
       <div class="card">
-        <img src="Job.jpeg" alt="船務">
+        <img src="Job.jpeg" alt="船務媒合服務">
         <div class="overlay">
-          <h3>船務媒合</h3>
-          <p>本公司致力於提供專業的船務媒合服務，協助貨主精準對接船公司，確保貨物能以最適合的航線與運力進行運輸，達到效率最佳化並有效降低成本。</p>
+          <h3 data-en="Shipping Brokerage">船務媒合</h3>
+          <p data-en="We specialize in professional shipping brokerage, helping cargo owners connect with carriers to optimize efficiency and reduce costs.">本公司致力於提供專業的船務媒合服務，協助貨主精準對接船公司，確保貨物能以最適合的航線與運力進行運輸，達到效率最佳化並有效降低成本。</p>
         </div>
         <div class="card-text">
-          <h3>船務媒合</h3>
-          <p>幫您找到最合適的航線與船公司，讓貨物能準時、順利又省成本地送達。</p>
+          <h3 data-en="Shipping Brokerage">船務媒合</h3>
+          <p data-en="Helping you find the best routes and carriers so your cargo arrives on time, smoothly, and cost-effectively.">幫您找到最合適的航線與船公司，讓貨物能準時、順利又省成本地送達。</p>
         </div>
       </div>
-      <!-- 服務項目 2 -->
       <div class="card">
-        <img src="Boat.jpg" alt="租賃">
+        <img src="Boat.jpg" alt="船舶租賃與買賣">
         <div class="overlay">
-          <h3>船舶租賃買賣</h3>
-          <p>我們專注於船舶租賃與買賣服務，依照客戶需求提供多元化的船舶資源。不論是短期租賃或長期購置，我們均能提供完善的諮詢、規劃與交易支持，確保流程安全透明。</p>
+          <h3 data-en="Ship Leasing & Sales">船舶租賃買賣</h3>
+          <p data-en="We provide diverse ship leasing and sales services tailored to client needs, ensuring transparent and safe processes from planning to transaction.">我們專注於船舶租賃與買賣服務，依照客戶需求提供多元化的船舶資源。不論是短期租賃或長期購置，我們均能提供完善的諮詢、規劃與交易支持，確保流程安全透明。</p>
         </div>
         <div class="card-text">
-          <h3>船舶租賃買賣</h3>
-          <p>不管是短租、長租還是買船，幫您找到合適的船舶，並提供安心透明的交易服務。</p>
+          <h3 data-en="Ship Leasing & Sales">船舶租賃買賣</h3>
+          <p data-en="Whether short-term, long-term, or purchasing, we help you find suitable vessels and provide secure, transparent transactions.">不管是短租、長租還是買船，幫您找到合適的船舶，並提供安心透明的交易服務。</p>
         </div>
       </div>
-      <!-- 服務項目 3 -->
       <div class="card">
-        <img src="機具.jpeg" alt="機具">
+        <img src="機具.jpeg" alt="大型機具維護">
         <div class="overlay">
-          <h3>機具維護</h3>
-          <p>我們擁有專業的維修與保養團隊，針對港口作業常用之橋式起重機、門式軌道起重機等設備，提供定期檢修與維護服務，確保設備運作安全、穩定並延長使用年限。</p>
+          <h3 data-en="Equipment Maintenance">機具維護</h3>
+          <p data-en="Our team provides regular inspection and maintenance for port equipment such as container cranes, ensuring safety and extending equipment lifespan.">我們擁有專業的維修與保養團隊，針對港口作業常用之橋式起重機、門式軌道起重機等設備，提供定期檢修與維護服務，確保設備運作安全、穩定並延長使用年限。</p>
         </div>
         <div class="card-text">
-          <h3>機具維護</h3>
-          <p>專業維護港口常用的大型起重設備，確保機具安全、穩定，讓作業不中斷。</p>
+          <h3 data-en="Equipment Maintenance">機具維護</h3>
+          <p data-en="Professional maintenance of port cranes and heavy equipment, ensuring safety and uninterrupted operations.">專業維護港口常用的大型起重設備，確保機具安全、穩定，讓作業不中斷。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 聯絡我們 -->
-  <section id="contact" class="section" style="text-align: center;">
-    <h2>聯絡方式</h2>
-    <p>Email：zitaintl@outlook.com</p>
-    <p>Tel：07-8313999 # 375</p>
+  <section id="contact" class="section contact-section" style="text-align: center;">
+    <h2 data-en="Contact">聯絡方式</h2>
+    <p>Email：<a href="mailto:zitaintl@outlook.com">zitaintl@outlook.com</a></p>
+    <p data-en="Mobile: <a href='tel:+886938165050'>+886-938165050</a>">Mobile：<a href="tel:0938165050">0938-165050</a></p>
+    <p data-en="Tel: <a href='tel:+88678313999'>07-8313999 EXT 375</a>">Tel：<a href="tel:078313999">07-8313999</a> # 375</p>
     <p>Fax：07-8128955</p>
-    <p>Address：812高雄市小港區東亞南路6號1樓</p>
-    <p>1 F., No. 6, Dongya S. Rd., Xiaogang Dist., Kaohsiung City</p>
+    <p data-en="Address: 1F., No. 6, Dongya S. Rd., Xiaogang Dist., Kaohsiung City 812, Taiwan">Address：812高雄市小港區東亞南路6號1樓</p>
+    <p class="translatable" data-en="">1 F., No. 6, Dongya S. Rd., Xiaogang Dist., Kaohsiung City</p>
     <div class="map-container">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.59634760812!2d120.33210197530005!3d22.556788779503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e02d04b3995c3%3A0x66f0fe86324a6885!2zODEy6auY6ZuE5biC5bCP5riv5Y2A5p2x5Lqe5Y2X6LevNuiZnw!5e0!3m2!1szh-TW!2stw!4v1757404080976!5m2!1szh-TW!2stw" allowfullscreen loading="lazy"></iframe>
+      <iframe src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=812%E9%AB%98%E9%9B%84%E5%B8%82%E5%B0%8F%E6%B8%AF%E5%8D%80%E6%9D%B1%E4%BA%9E%E5%8D%97%E8%B7%AF6%E8%99%9F+(%E8%87%AA%E6%B3%B0%E5%9C%8B%E9%9A%9B%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed" allowfullscreen loading="lazy"></iframe>
     </div>
   </section>
 
-  <!-- 頁尾 -->
   <footer>
+    <p class="translatable" data-en="Tel: +886-7-8313999 | Email: zitaintl@outlook.com">電話: 07-8313999 | 信箱: zitaintl@outlook.com</p>
+    <p data-en="Address: 1F., No. 6, Dongya S. Rd., Xiaogang Dist., Kaohsiung City">地址: 812高雄市小港區東亞南路6號1樓</p>
     <p>© 2025 zitai INTL Co., Ltd. All Rights Reserved.</p>
   </footer>
 
-  <!-- 中英切換 -->
   <script>
     const langBtn = document.getElementById("lang-toggle");
-    let isChinese = true;
+    const body = document.body;
+    // 選擇所有有 data-en 屬性的元素
+    const elements = document.querySelectorAll('[data-en]');
 
+    // 核心內容區塊的長文本
+    const aboutContent_zh = `
+        <p>本公司主要據點位於港口碼頭，專注於提供專業的船舶服務與產業支援。我們致力於串聯船東與客戶之間的合作，確保航運作業能夠順暢且高效，並協助建立長期且互信的合作關係。</p>
+        <p>除了媒合服務外，我們亦提供船舶租賃與買賣業務，能依據客戶的需求，提供合適的船舶資源與完整的交易支持。不論是短期租賃或長期購置，我們皆以安全、透明且專業的流程，協助客戶靈活調度與配置資源。</p>
+        <p>同時，我們具備完善的大型機具維修能力，擁有專業技術團隊與維修設備，能針對港口及航運相關的大型機具進行檢測、保養與修繕，確保作業安全與設備效能。</p>
+        <p>憑藉著對產業的深刻理解與豐富經驗，我們持續提升服務品質，為船東、貨主及合作夥伴提供最可靠的支持， 共同推動航運產業的穩健發展。</p>
+    `;
+    const aboutContent_en = `
+        <p>Our company is based at the port terminal, specializing in providing professional maritime services and industrial support. We are committed to bridging cooperation between shipowners and clients, ensuring smooth and efficient shipping operations, while fostering long-term and trustworthy partnerships.</p>
+        <p>In addition to brokerage services, we also provide ship leasing and sales. According to customer needs, we can offer suitable vessel resources and complete transaction support. Whether for short-term leasing or long-term acquisition, we ensure safe, transparent, and professional processes to help clients flexibly allocate resources.</p>
+        <p>We also have a professional maintenance team and facilities for large-scale equipment at ports, capable of inspection, maintenance, and repair of port and shipping machinery, ensuring safety and performance.</p>
+        <p>With deep industry expertise and extensive experience, we continuously enhance service quality to provide the most reliable support to shipowners, cargo owners, and partners, contributing to the steady development of the maritime industry.</p>
+    `;
+
+    function updateContent(lang) {
+        const isEnglish = (lang === 'en');
+        body.setAttribute('data-lang', lang);
+
+        // 1. 遍歷所有帶有 data-en 屬性的元素進行翻譯
+        elements.forEach(el => {
+            const englishText = el.getAttribute('data-en');
+            
+            if (englishText) {
+                // 儲存原始中文內容（第一次執行時儲存）
+                if (!el.getAttribute('data-zh')) {
+                    el.setAttribute('data-zh', el.innerHTML);
+                }
+                
+                // 根據語言設定內容
+                el.innerHTML = isEnglish ? englishText : el.getAttribute('data-zh');
+            }
+        });
+
+        // 2. 處理 About Us 區塊
+        document.querySelector("#about .about-content").innerHTML = isEnglish ? aboutContent_en : aboutContent_zh;
+
+        // 3. 處理語言切換按鈕文字
+        langBtn.textContent = isEnglish ? "中文" : "English";
+    }
+
+    // 點擊事件監聽
     langBtn.addEventListener("click", () => {
-      if (isChinese) {
-        /* ===== 切換成英文 ===== */
-        document.querySelector('a[href="#about"]').textContent = "About Us";
-        document.querySelector('a[href="#menu"]').textContent = "Services";
-        document.querySelector('a[href="#contact"]').textContent = "Contact";
-        document.querySelector("header h1").textContent = "Zitai INTL Co., Ltd.";
-        document.querySelector("#about h2").textContent = "About Us";
-        document.querySelector("#menu h2").textContent = "Services";
-        document.querySelector("#contact h2").textContent = "Contact";
-
-        /* About Us 內文 */
-        document.querySelector("#about div").innerHTML = `
-          <p>Our company is based at the port terminal, specializing in providing professional maritime services and industrial support. We are committed to bridging cooperation between shipowners and clients, ensuring smooth and efficient shipping operations, while fostering long-term and trustworthy partnerships.</p>
-          <p>In addition to brokerage services, we also provide ship leasing and sales. According to customer needs, we can offer suitable vessel resources and complete transaction support. Whether for short-term leasing or long-term acquisition, we ensure safe, transparent, and professional processes to help clients flexibly allocate resources.</p>
-          <p>We also have a professional maintenance team and facilities for large-scale equipment at ports, capable of inspection, maintenance, and repair of port and shipping machinery, ensuring safety and performance.</p>
-          <p>With deep industry expertise and extensive experience, we continuously enhance service quality to provide the most reliable support to shipowners, cargo owners, and partners, contributing to the steady development of the maritime industry.</p>
-        `;
-
-        /* 服務項目卡片 */
-        document.querySelectorAll(".card-text")[0].innerHTML = `
-          <h3>Shipping Brokerage</h3>
-          <p>Helping you find the best routes and carriers so your cargo arrives on time, smoothly, and cost-effectively.</p>
-        `;
-        document.querySelectorAll(".card-text")[1].innerHTML = `
-          <h3>Ship Leasing & Sales</h3>
-          <p>Whether short-term, long-term, or purchasing, we help you find suitable vessels and provide secure, transparent transactions.</p>
-        `;
-        document.querySelectorAll(".card-text")[2].innerHTML = `
-          <h3>Equipment Maintenance</h3>
-          <p>Professional maintenance of port cranes and heavy equipment, ensuring safety and uninterrupted operations.</p>
-        `;
-
-        /* Overlay */
-        document.querySelectorAll(".overlay")[0].innerHTML = `
-          <h3>Shipping Brokerage</h3>
-          <p>We specialize in professional shipping brokerage, helping cargo owners connect with carriers to optimize efficiency and reduce costs.</p>
-        `;
-        document.querySelectorAll(".overlay")[1].innerHTML = `
-          <h3>Ship Leasing & Sales</h3>
-          <p>We provide diverse ship leasing and sales services tailored to client needs, ensuring transparent and safe processes from planning to transaction.</p>
-        `;
-        document.querySelectorAll(".overlay")[2].innerHTML = `
-          <h3>Equipment Maintenance</h3>
-          <p>Our team provides regular inspection and maintenance for port equipment such as container cranes, ensuring safety and extending equipment lifespan.</p>
-        `;
-
-        /* 聯絡方式 */
-        document.querySelector("#contact").innerHTML = `
-          <h2>Contact</h2>
-          <p>Email: zitaintl@outlook.com</p>
-          <p>Mobile: +886-938165050</p>
-          <p>Tel: 07-8313999 EXT 375</p>
-          <p>Fax: 07-8128955</p>
-          <p>Address: 1F., No. 6, Dongya S. Rd., Xiaogang Dist., Kaohsiung City 812, Taiwan</p>
-          <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7369.192683436368!2d120.334677!3d22.556789!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e02d04b3995c3%3A0x66f0fe86324a6885!2sNo.%206%2C%20Dongya%20S%20Rd%2C%20Siaogang%20District%2C%20Kaohsiung%20City%2C%20812!5e0!3m2!1sen!2stw!4v1757404470936!5m2!1sen!2stw" allowfullscreen loading="lazy"></iframe>
-          </div>
-        `;
-
-        langBtn.textContent = "中文";
-        isChinese = false;
-
-      } else {
-        /* ===== 切換回中文 ===== */
-        document.querySelector('a[href="#about"]').textContent = "關於自泰";
-        document.querySelector('a[href="#menu"]').textContent = "服務項目";
-        document.querySelector('a[href="#contact"]').textContent = "聯絡方式";
-        document.querySelector("header h1").textContent = "自泰國際有限公司";
-        document.querySelector("#about h2").textContent = "關於自泰";
-        document.querySelector("#menu h2").textContent = "服務項目";
-        document.querySelector("#contact h2").textContent = "聯絡方式";
-
-        /* About Us 中文 */
-        document.querySelector("#about div").innerHTML = `
-          <p>本公司主要據點位於港口碼頭，專注於提供專業的船舶服務與產業支援。我們致力於串聯船東與客戶之間的合作，確保航運作業能夠順暢且高效，並協助建立長期且互信的合作關係。</p>
-          <p>除了媒合服務外，我們亦提供船舶租賃與買賣業務，能依據客戶的需求，提供合適的船舶資源與完整的交易支持。不論是短期租賃或長期購置，我們皆以安全、透明且專業的流程，協助客戶靈活調度與配置資源。</p>
-          <p>同時，我們具備完善的大型機具維修能力，擁有專業技術團隊與維修設備，能針對港口及航運相關的大型機具進行檢測、保養與修繕，確保作業安全與設備效能。</p>
-          <p>憑藉著對產業的深刻理解與豐富經驗，我們持續提升服務品質，為船東、貨主及合作夥伴提供最可靠的支持， 共同推動航運產業的穩健發展。</p>
-        `;
-
-        /* 服務項目卡片 */
-        document.querySelectorAll(".card-text")[0].innerHTML = `
-          <h3>船務媒合</h3>
-          <p>幫您找到最合適的航線與船公司，讓貨物能準時、順利又省成本地送達。</p>
-        `;
-        document.querySelectorAll(".card-text")[1].innerHTML = `
-          <h3>船舶租賃買賣</h3>
-          <p>不管是短租、長租還是買船，幫您找到合適的船舶，並提供安心透明的交易服務。</p>
-        `;
-        document.querySelectorAll(".card-text")[2].innerHTML = `
-          <h3>機具維護</h3>
-          <p>專業維護港口常用的大型起重設備，確保機具安全、穩定，讓作業不中斷。</p>
-        `;
-
-        /* Overlay 中文 */
-        document.querySelectorAll(".overlay")[0].innerHTML = `
-          <h3>船務媒合</h3>
-          <p>本公司致力於提供專業的船務媒合服務，協助貨主精準對接船公司，確保貨物能以最適合的航線與運力進行運輸，達到效率最佳化並有效降低成本。</p>
-        `;
-        document.querySelectorAll(".overlay")[1].innerHTML = `
-          <h3>船舶租賃買賣</h3>
-          <p>我們專注於船舶租賃與買賣服務，依照客戶需求提供多元化的船舶資源。不論是短期租賃或長期購置，我們均能提供完善的諮詢、規劃與交易支持，確保流程安全透明。</p>
-        `;
-        document.querySelectorAll(".overlay")[2].innerHTML = `
-          <h3>機具維護</h3>
-          <p>我們擁有專業的維修與保養團隊，針對港口作業常用之橋式起重機、門式軌道起重機等設備，提供定期檢修與維護服務，確保設備運作安全、穩定並延長使用年限。</p>
-        `;
-
-        /* 聯絡方式 中文 */
-        document.querySelector("#contact").innerHTML = `
-          <h2>聯絡方式</h2>
-          <p>Email：zitaintl@outlook.com</p>
-          <p>Mobile: 0938-165050</p>
-          <p>Tel：07-8313999 EXT 375</p>
-          <p>Fax：07-8128955</p>
-          <p>Address：812高雄市小港區東亞南路6號1樓</p>
-          <div class="map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.59634760812!2d120.33210197530005!3d22.556788779503!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e02d04b3995c3%3A0x66f0fe86324a6885!2zODEy6auY6ZuE5biC5bCP5riv5Y2A5p2x5Lqe5Y2X6LevNuiZnw!5e0!3m2!1szh-TW!2stw!4v1757404080976!5m2!1szh-TW!2stw" allowfullscreen loading="lazy"></iframe>
-          </div>
-          </div>
-        `;
-
-        langBtn.textContent = "English";
-        isChinese = true;
-      }
+        const currentLang = body.getAttribute('data-lang');
+        const newLang = currentLang === 'zh' ? 'en' : 'zh';
+        updateContent(newLang);
     });
+
+    // 網站載入時，初始化為中文
+    updateContent('zh'); 
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
